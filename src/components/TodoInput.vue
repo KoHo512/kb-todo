@@ -1,13 +1,17 @@
 <script setup>
 import { ref } from 'vue';
 
-const inputMsg = ref('');
-
 const emit = defineEmits(['add-todo']);
 
+const inputMsg = ref('');
+
 const addTodo = () => {
-  if (inputMsg.value == '') return;
-  emit('add-todo', inputMsg.value);
+  // 데이터 전처리
+  const trimmedMsg = inputMsg.value.trim();
+  if (!trimmedMsg) return;
+
+  emit('add-todo', trimmedMsg);
+
   inputMsg.value = '';
 };
 </script>

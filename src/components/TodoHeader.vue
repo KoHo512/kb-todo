@@ -2,12 +2,9 @@
 defineProps({
   current: {
     type: String,
-    default() {
-      return 'all';
-    },
+    default: 'all',
   },
 });
-
 const emit = defineEmits(['update-tab']);
 
 const updateTab = (tab) => {

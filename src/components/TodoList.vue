@@ -1,10 +1,14 @@
 <script setup>
-defineProps(['computedTodo']);
+defineProps({
+  todos: {
+    type: Array,
+    default: () => [],
+  },
+});
+const emit = defineEmits(['toggle-todo', 'delete-todo']);
 
-const emit = defineEmits(['update-completed', 'delete-todo']);
-
-const updateCompleted = (id) => {
-  emit('update-completed', id);
+const toggleTodo = (id) => {
+  emit('toggle-todo', id);
 };
 
 const deleteTodo = (id) => {
@@ -14,18 +18,22 @@ const deleteTodo = (id) => {
 
 <template>
   <div class="todo__list">
+    <div v-if="todos.length === 0" class="todo__item--empty">
+      <p>할 일이 없습니다.</p>
+    </div>
+
     <div
+      v-for="todo in todos"
       class="todo__item"
-      v-for="todo in computedTodo"
+      :key="todo.id"
       :class="{ 'todo__item--completed': todo.completed }"
     >
-      <input
-        type="checkbox"
-        :id="todo.id"
-        @change="updateCompleted(todo.id)"
-        :checked="todo.completed"
-      />
-      <label :for="todo.id" class="todo__checkbox-label">
+      <label class="todo__item-check-wrap">
+        <input
+          type="checkbox"
+          :checked="todo.completed"
+          @change="toggleTodo(todo.id)"
+        />
         <span class="todo__item-text">{{ todo.msg }}</span>
       </label>
       <span
@@ -34,9 +42,6 @@ const deleteTodo = (id) => {
       >
         delete
       </span>
-    </div>
-    <div class="todo__item--no" v-if="computedTodo.length === 0">
-      <p>할일 목록이 없습니다.</p>
     </div>
   </div>
 </template>
