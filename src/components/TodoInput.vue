@@ -1,19 +1,14 @@
-<script>
-export default {
-  name: 'TodoInput',
-  data() {
-    return {
-      inputMsg: '',
-    };
-  },
-  emits: ['add-todo'],
-  methods: {
-    addTodo() {
-      if (this.inputMsg == '') return;
-      this.$emit('add-todo', this.inputMsg);
-      this.inputMsg = '';
-    },
-  },
+<script setup>
+import { ref } from 'vue';
+
+const inputMsg = ref('');
+
+const emit = defineEmits(['add-todo']);
+
+const addTodo = () => {
+  if (inputMsg.value == '') return;
+  emit('add-todo', inputMsg.value);
+  inputMsg.value = '';
 };
 </script>
 

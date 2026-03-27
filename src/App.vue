@@ -1,51 +1,43 @@
-<script>
-import TodoHeader from './components/TodoHeader.vue';
-import TodoInput from './components/TodoInput.vue';
-import TodoList from './components/TodoList.vue';
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue';
 
-export default {
-  components: {
-    TodoHeader,
-    TodoList,
-    TodoInput,
-  },
-  data() {
-    return {
-      todos: [],
-      current: 'all',
-    };
-  },
-  methods: {
-    addTodo(inputMsg) {
-      const item = {
-        id: crypto.randomUUID(),
-        msg: inputMsg,
-        completed: false,
-      };
-      this.todos.push(item);
-    },
-    updateTab(tab) {
-      this.current = tab;
-    },
-    updateCompleted(id) {
-      const idx = this.todos.findIndex((todo) => todo.id === id);
-      this.todos[idx].completed = !this.todos[idx].completed;
-    },
-    deleteTodo(id) {
-      const idx = this.todos.findIndex((todo) => todo.id === id);
-      this.todos.splice(idx, 1);
-    },
-  },
-  computed: {
-    computedTodo() {
-      if (this.current === 'completed') {
-        return this.todos.filter((todo) => todo.completed);
-      } else {
-        return this.todos;
-      }
-    },
-  },
+import TodoHeader from './components/TodoHeader.vue';
+import TodoList from './components/TodoList.vue';
+import TodoInput from './components/TodoInput.vue';
+
+const todos = ref([]);
+const current = ref('all');
+
+const addTodo = (inputMsg) => {
+  const item = {
+    id: crypto.randomUUID(),
+    msg: inputMsg,
+    completed: false,
+  };
+  todos.value.push(item);
 };
+
+const updateTab = (tab) => {
+  current.value = tab;
+};
+
+const updateCompleted = (id) => {
+  const idx = todos.value.findIndex((todo) => todo.id === id);
+  todos.value[idx].completed = !todos.value[idx].completed;
+};
+
+const deleteTodo = (id) => {
+  const idx = todos.value.findIndex((todo) => todo.id === id);
+  todos.value.splice(idx, 1);
+};
+
+const computedTodo = computed(() => {
+  if (current.value === 'completed') {
+    return todos.value.filter((todo) => todo.completed);
+  } else {
+    return todos.value;
+  }
+});
 </script>
 
 <template>

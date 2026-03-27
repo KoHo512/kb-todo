@@ -1,20 +1,17 @@
-<script>
-export default {
-  name: 'TodoHeader',
-  props: {
-    current: {
-      type: String,
-      default() {
-        return 'all';
-      },
+<script setup>
+defineProps({
+  current: {
+    type: String,
+    default() {
+      return 'all';
     },
   },
-  emits: ['update-tab'],
-  methods: {
-    updateTab(tab) {
-      this.$emit('update-tab', tab);
-    },
-  },
+});
+
+const emit = defineEmits(['update-tab']);
+
+const updateTab = (tab) => {
+  emit('update-tab', tab);
 };
 </script>
 

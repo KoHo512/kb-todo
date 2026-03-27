@@ -1,16 +1,14 @@
-<script>
-export default {
-  name: 'TodoList',
-  props: ['computedTodo'],
-  emits: ['update-completed', 'delete-todo'],
-  methods: {
-    updateCompleted(id) {
-      this.$emit('update-completed', id);
-    },
-    deleteTodo(id) {
-      this.$emit('delete-todo', id);
-    },
-  },
+<script setup>
+defineProps(['computedTodo']);
+
+const emit = defineEmits(['update-completed', 'delete-todo']);
+
+const updateCompleted = (id) => {
+  emit('update-completed', id);
+};
+
+const deleteTodo = (id) => {
+  emit('delete-todo', id);
 };
 </script>
 
