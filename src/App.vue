@@ -61,6 +61,11 @@ const completedCount = computed(() => {
 const remainingCount = computed(() => {
   return todos.value.filter((todo) => !todo.completed).length;
 });
+
+// 완료된 할 일 삭제
+const deleteCompleted = () => {
+  todos.value = todos.value.filter((todo) => !todo.completed);
+};
 </script>
 
 <template>
@@ -73,6 +78,12 @@ const remainingCount = computed(() => {
         <p>완료한 할 일 : {{ completedCount }}개</p>
         <p>남은 할 일 : {{ remainingCount }}개</p>
       </div>
+    </div>
+
+    <div class="todo-manage">
+      <button :disabled="!completedCount" @click="deleteCompleted">
+        완료한 할 일 전체 삭제
+      </button>
     </div>
 
     <TodoList
