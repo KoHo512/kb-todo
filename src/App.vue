@@ -51,11 +51,29 @@ const filteredTodo = computed(() => {
     return todos.value;
   }
 });
+
+// 완료된 할 일 개수 계산
+const completedCount = computed(() => {
+  return todos.value.filter((todo) => todo.completed).length;
+});
+
+// 완료되지 않은 할 일 개수 계산
+const remainingCount = computed(() => {
+  return todos.value.filter((todo) => !todo.completed).length;
+});
 </script>
 
 <template>
   <div class="todo">
     <TodoHeader :current="current" @update-tab="updateTab" />
+
+    <div class="todo-summary">
+      <p>전체 할 일 : {{ todos.length }}개</p>
+      <div class="todo-summary-wrap">
+        <p>완료한 할 일 : {{ completedCount }}개</p>
+        <p>남은 할 일 : {{ remainingCount }}개</p>
+      </div>
+    </div>
 
     <TodoList
       :todos="filteredTodo"
