@@ -13,17 +13,17 @@ const updateTab = (tab) => {
 </script>
 
 <template>
-  <div class="todo__title">
-    <h1 class="todo__text">Todo List</h1>
-    <ul class="todo__tab">
+  <div class="todo-title">
+    <h1 class="todo-text">Todo List</h1>
+    <ul class="todo-tab">
       <li
-        :class="{ 'todo__tab--active': current === 'all' }"
+        :class="{ 'todo-tab--active': current === 'all' }"
         @click="updateTab('all')"
       >
         전체
       </li>
       <li
-        :class="{ 'todo__tab--active': current === 'completed' }"
+        :class="{ 'todo-tab--active': current === 'completed' }"
         @click="updateTab('completed')"
       >
         완료

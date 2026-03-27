@@ -17,27 +17,27 @@ const deleteTodo = (id) => {
 </script>
 
 <template>
-  <div class="todo__list">
-    <div v-if="todos.length === 0" class="todo__item--empty">
+  <div class="todo-list">
+    <div v-if="todos.length === 0" class="todo-item--empty">
       <p>할 일이 없습니다.</p>
     </div>
 
     <div
       v-for="todo in todos"
-      class="todo__item"
+      class="todo-item"
       :key="todo.id"
-      :class="{ 'todo__item--completed': todo.completed }"
+      :class="{ 'todo-item--completed': todo.completed }"
     >
-      <label class="todo__item-check-wrap">
+      <label class="todo-item-check-wrap">
         <input
           type="checkbox"
           :checked="todo.completed"
           @change="toggleTodo(todo.id)"
         />
-        <span class="todo__item-text">{{ todo.msg }}</span>
+        <span class="todo-item-text">{{ todo.msg }}</span>
       </label>
       <span
-        class="material-symbols-outlined todo__delete-icon"
+        class="material-symbols-outlined todo-delete-icon"
         @click="deleteTodo(todo.id)"
       >
         delete
