@@ -5,8 +5,22 @@ import TodoHeader from './components/TodoHeader.vue';
 import TodoList from './components/TodoList.vue';
 import TodoInput from './components/TodoInput.vue';
 
+const STORAGE_KEY = 'todo-app-composition-api';
+
 const todos = ref([]);
 const current = ref('all');
+
+// localStorage에 저장된 할 일 목록 불러오기
+onMounted(() => {
+  if (localStorage.getItem(STORAGE_KEY)) {
+    todos.value = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  }
+});
+
+// localStorage에 변경사항 반영
+const setLocalStorage = () => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos.value));
+};
 
 const addTodo = (trimmedMsg) => {
   const item = {
@@ -15,8 +29,9 @@ const addTodo = (trimmedMsg) => {
     completed: false,
   };
 
-  // 새롭게 입력된 할 일을 배열 맨 앞에 추가 (최신 등록 할 일이 맨 위에 렌더링)
+  // 새롭게 입력된 할 일을 배열 맨 앞에 추가 (최신 등록된 할 일이 맨 위에 렌더링)
   todos.value.unshift(item);
+  setLocalStorage();
 };
 
 const updateTab = (tab) => {
@@ -34,6 +49,7 @@ const toggleTodo = (id) => {
       return todo;
     }
   });
+  setLocalStorage();
 };
 
 const deleteTodo = (id) => {
@@ -41,6 +57,7 @@ const deleteTodo = (id) => {
   // todos.value.splice(idx, 1);
 
   todos.value = todos.value.filter((todo) => todo.id !== id);
+  setLocalStorage();
 };
 
 // 현재 탭 상태에 따라 할 일 리스트 필터
@@ -65,6 +82,7 @@ const remainingCount = computed(() => {
 // 완료된 할 일 삭제
 const deleteCompleted = () => {
   todos.value = todos.value.filter((todo) => !todo.completed);
+  setLocalStorage();
 };
 </script>
 
